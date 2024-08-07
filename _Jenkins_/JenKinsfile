@@ -1,0 +1,45 @@
+#!/usr/bin/env groovy
+@Library('main@release/2.16.1')
+// ///////////////////////////////////////////
+import library.Main.*
+// import hudson.model.*
+import hudson.EnvVars
+import groovy.transform.Field
+// ///////////////////////////////////////////
+def job = new api.job()
+def pipeline = new api.pipeline.sequential()
+// ///////////////////////////////////////////
+M_BuildTarget=["Init"]
+//////////////////
+env.M_RepositoryUrl="ssh://git@git.ifeelsmart.net:7999/BKD/c2c.git"
+env.M_NotificationLvl=1
+env.M_Project="BackEnd"
+//@Env@
+//M_NotificationLvl0->Only Notif when build is failing
+//M_NotificationLvl1->Notif only when build is finished
+//M_NotificationLvl2->Notif Start + Build finished
+//M_NotificationLvl3->LVL2 + Warning
+//M_NotificationLvl4->Jenkins Log Lvl
+
+
+// properties([
+//     parameters([
+//         string(defaultValue: ""    , description: ""      , name: "IrcChannel", trim: true),
+//     ])
+// ])
+
+// env.M_IrcChannel="${params.IrcChannel}"
+
+
+//@Target@
+M_BuildTarget.push("default")
+
+M_BuildTarget.remove("Init")
+
+job.start()
+pipeline.workspace(M_BuildTarget,"SCM","start")
+
+//@Exec@
+pipeline.exec(M_BuildTarget,"Build","false")
+
+pipeline.workspace(M_BuildTarget,"End","end")

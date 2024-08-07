@@ -1,0 +1,26 @@
+#!/usr/bin/env groovy
+@Library('main@release/2.17.0')
+// ///////////////////////////////////////////
+import library.Main.*
+import hudson.EnvVars
+import groovy.transform.Field
+// ///////////////////////////////////////////
+def job = new api.job()
+def pipeline = new api.pipeline.sequential()
+// ///////////////////////////////////////////
+M_BuildTarget=["ifeelsmart"]
+//////////////////
+env.M_Project = "BackEnd"
+env.VersionFile = "VERSION"
+env.M_RepositoryUrl="ssh://git@git.ifeelsmart.net:7999/BKD/c2c.git"
+env.M_NotificationLvl=1
+env.M_IrcChannel="maculosa-dev"
+
+job.start()
+pipeline.workspace(M_BuildTarget,"SCM","start")
+
+
+pipeline.exec(M_BuildTarget,"package","false")
+pipeline.exec(M_BuildTarget,"publish","false")
+
+pipeline.workspace(M_BuildTarget,"End","end")

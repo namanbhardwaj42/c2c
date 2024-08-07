@@ -1,0 +1,181 @@
+port: :8080
+  # Defines the port number the application is listening to.
+debug: true
+  # Enables/Disable debug mode
+version_prefixed_routes: true
+  # Defines if application's routes has to be prefixed within
+  # its release version.
+installpath: .
+  # Defines the abosolute path location where the application
+  # has been installed.
+keypath: .
+  # Defines te absolute path location of your stored JWT key
+basepath: ""
+  # Defines The base path you the application
+proxyurl: https://maculosa-api.domain.tld/
+  # Defines the maculosa-api base URL to connect from
+ratingmapurl: https://storage.googleapis.com/ifs-demo-assets/rating-system.json
+  # Defines the contents rating map base URL to connect from
+ratingtype: mpaa
+  # Defines the contents rating system to use
+  #
+  # Available rating system:
+  #   - csa
+  #   - cnc
+  #   - tvpg
+  #   - mpaa
+  #   - esrb
+  #   - icaa
+  #   - israel
+  #   - pegi
+  #   - fpb
+  #   - imda
+cors:
+  # Cross Origin Resource Sharing
+  #
+  # Available options
+  #  allowed_origin : defines a list of origins a cross-domain request can be executed from.
+  #  allowed_methods: defines a list of HTTP method a remote client is allowed to use.
+  #  allowed_headers: defines a list of headers a remote client is allowed to use.
+  allowed_origins: '*'
+  allowed_methods: POST,GET,DELETE
+  allowed_headers: X-Requested-With,Content-Type
+log:
+  # Logging behaviors
+  #
+  # Available options
+  #  consolelevel: defines the level of msg to display on the stdout.
+  #  usefile:      defines if the app has to write its log entries into a defined log file.
+  #  filepath:     defines the location of the log file (if usefile option is set to true).
+  #  filelevel:    defines the level of msg to store in the log files.
+  #  filemaxsize:  defines the limit size of the log file (in Mo).
+  #  filemaxbackup: defines the limit number of log files to write when the limit size is reached.
+  #  filemaxage:    defines the limit - in day - of log files, the log files will be recycled once the limit is reached.
+  consolelevel: debug
+  usefile: false
+  filelevel: debug
+  filepath: "."
+  filemaxsize: 50
+  filemaxbackup: 3
+  filemaxage: 28
+caching:
+  # Caching mechanism
+  #   This option allows you to manage the availability of requests resources
+  #   that has been cached.
+  #
+  # Available options:
+  #   default_ttl: defines the time (in second) before the cache is purged.
+  #   error_ttl:   defines the time (in second) before error in cache is purged.
+  default_ttl: 300
+  error_ttl: 2
+assistant:
+  # Google Assistant requests handler
+  #   The below options allow you to manage how the requests coming from the
+  #   Google Assistant (the remote client) should be handled in between
+  #   Google platform Cloud and maculosa-api search engine.
+  #
+  #   All the provided options below speak to themselves and does not require
+  #   additional description.
+  search:
+    order_by: title
+    group_order: asc
+    content_ordering: vodfirst
+    max_display_category: 3
+    recency: 5184000
+    timeout: 20000
+    limit: 50
+    adult_rating: "XXX,R"
+    datasets: 
+      - ALL
+    epg_serie_gathering: true
+    enable_search_by_content_id: true
+    epg_ordering_start_asc: false
+    epg_limit: 25
+    vod_limit: 25
+    display_network: true
+    content_query:
+      movies:
+      - vod
+      tvshows:
+      - vod
+  badges:
+    # Defines badges criterias to look up for contents
+    static:
+    - enable: true
+      badge_id: NEW_CONTENT
+    - enable: true
+      badge_id: TIME_LEFT
+    - enable: true
+      badge_id: NOT_ENTITLED
+    - enable: true
+      badge_id: RECORDING
+    - enable: true
+      badge_id: ENTITY_LOGO
+    dynamic: []
+  ctas:
+    # Defines call-to-action criteria to look up for contents
+  - enable: true
+    type: PLAY
+    searchQueries:
+    - PLAY
+    - PLAY_TVM
+    labels:
+      en_US: Play
+      fr_FR: Démarrer
+  - enable: false
+    type: RECORD
+    searchQueries:
+    - ALL
+    labels:
+      en_US: Record
+      fr_FR: Enregistrer
+  - enable: false
+    type: DELETE_RECORDING
+    searchQueries:
+    - ALL
+    labels:
+      en_US: Delete Recording
+      fr_FR: Suppr. Enregistrement
+  - enable: false
+    type: CANCEL_RECORDING
+    searchQueries:
+    - ALL
+    labels:
+      en_US: Cancel Recording
+      fr_FR: Annuler Enregistrement
+  - enable: false
+    type: RESTART
+    searchQueries:
+    - ALL
+    labels:
+      en_US: Restart
+      fr_FR: Redémarrer
+  - enable: false
+    type: PLAY_TRAILER
+    searchQueries:
+    - ALL
+    labels:
+      en_US: Trailer
+      fr_FR: Trailer
+  - enable: true
+    type: OPEN_APP
+    searchQueries:
+    - ENTITY_SEARCH
+    - SEARCH
+    labels:
+      en_US: More Details
+      fr_FR: Plus de détails
+  - enable: false
+    type: CUSTOM1
+    searchQueries:
+    - ALL
+    labels:
+      en_US: Add reminder
+      fr_FR: Ajouter un rappel
+  - enable: false
+    type: CUSTOM2
+    searchQueries:
+    - ALL
+    labels:
+      en_US: Add to favourites
+      fr_FR: Ajouter aux favoris
