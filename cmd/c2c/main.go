@@ -6,7 +6,7 @@ import (
 	app "c2c/internal/api"
 	"c2c/internal/api/utils"
 
-	log "github.com/sirupsen/ logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 func main() {
